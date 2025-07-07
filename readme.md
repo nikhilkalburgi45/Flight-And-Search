@@ -1,6 +1,7 @@
 # Airline Management System - Backend
 
 ## �� Table of Contents
+
 - [Overview](#overview)
 - [Features](#features)
 - [Tech Stack](#tech-stack)
@@ -56,17 +57,20 @@ The Airline Management System is a robust backend solution designed to handle co
 ### Installation
 
 1. Clone the repository:
+
 ```bash
 git clone <repository_url>
 cd airline-backend-system
 ```
 
 2. Install dependencies:
+
 ```bash
 npm install
 ```
 
 3. Set up environment variables:
+
 ```bash
 cp .env.example .env
 ```
@@ -76,16 +80,19 @@ cp .env.example .env
 ### Running the Application
 
 1. Run database migrations:
+
 ```bash
 npx sequelize-cli db:migrate
 ```
 
 2. Seed the database (optional):
+
 ```bash
 npx sequelize-cli db:seed:all
 ```
 
 3. Start the server:
+
 ```bash
 npm start
 ```
@@ -186,13 +193,14 @@ Flight (∞) ----- (1) Airplane
 ### Flight Endpoints
 
 | Method | Endpoint   | Description         |
-|--------|------------|---------------------|
+| ------ | ---------- | ------------------- |
 | POST   | `/flights` | Create a new flight |
 | GET    | `/flights` | List all flights    |
 
 ## 💻 Development
 
 ### Project Structure
+
 ```
 src/
 ├── config/         # Configuration files
@@ -205,6 +213,7 @@ src/
 ```
 
 ### Code Style
+
 - Follow ESLint configuration
 - Use meaningful variable names
 - Write clear comments
