@@ -1,111 +1,52 @@
-# Airline Management System - Backend
+# Flight & Search Service
 
-## �� Table of Contents
+A comprehensive microservice for managing flights, airports, airplanes, and cities in an airline management system. This service handles all flight-related operations including search, booking validation, and flight management.
 
-- [Overview](#overview)
-- [Features](#features)
-- [Tech Stack](#tech-stack)
-- [Getting Started](#getting-started)
-  - [Prerequisites](#prerequisites)
-  - [Installation](#installation)
-  - [Configuration](#configuration)
-  - [Running the Application](#running-the-application)
-- [Database Schema](#database-schema)
-  - [Entity Relationship Diagram](#entity-relationship-diagram)
-  - [Table Structures](#table-structures)
-- [API Documentation](#api-documentation)
-  - [City Endpoints](#city-endpoints)
-  - [Airport Endpoints](#airport-endpoints)
-  - [Airplane Endpoints](#airplane-endpoints)
-  - [Flight Endpoints](#flight-endpoints)
-- [Development](#development)
-  - [Project Structure](#project-structure)
-  - [Code Style](#code-style)
-- [Contributing](#contributing)
-- [License](#license)
+## 🚀 Features
 
-## 🚀 Overview
+- Complete CRUD operations for flights, airports, airplanes, and cities
+- Advanced flight search and filtering capabilities
+- Relational database management with proper foreign key relationships
+- Input validation and comprehensive error handling
+- RESTful API design with consistent response formats
+- Scalable architecture with service separation
 
-The Airline Management System is a robust backend solution designed to handle core airline operations. It provides a comprehensive set of APIs for managing cities, airports, airplanes, and flights, with a focus on data integrity and relationship management.
-
-## ✨ Features
-
-- Complete CRUD operations for all entities
-- Relational database management
-- Input validation and error handling
-- RESTful API design
-- Scalable architecture
-- Secure data management
-
-## 🛠 Tech Stack
+## 🛠️ Tech Stack
 
 - **Backend Framework:** Node.js with Express.js
-- **Database:** PostgreSQL
+- **Database:** MySQL
 - **ORM:** Sequelize
 - **Validation:** Express middleware
 - **Environment Management:** dotenv
-- **API Documentation:** Swagger/OpenAPI
+- **Error Handling:** Custom error classes
 
-## 🏁 Getting Started
+## 📋 Prerequisites
 
-### Prerequisites
-
-- Node.js (>= 14.x.x)
-- PostgreSQL (>= 12.x.x)
+- Node.js (v14 or higher)
+- MySQL Server
 - npm or yarn package manager
 
-### Installation
+## 🔧 Environment Variables
 
-1. Clone the repository:
+Create a `.env` file in the root directory with the following variables:
 
-```bash
-git clone <repository_url>
-cd airline-backend-system
+```env
+PORT=4000
+DB_NAME=airline_flights
+DB_USERNAME=root
+DB_PASSWORD=your_password
+DB_HOST=localhost
+DB_DIALECT=mysql
 ```
 
-2. Install dependencies:
-
-```bash
-npm install
-```
-
-3. Set up environment variables:
-
-```bash
-cp .env.example .env
-```
-
-4. Configure your database credentials in `.env`
-
-### Running the Application
-
-1. Run database migrations:
-
-```bash
-npx sequelize-cli db:migrate
-```
-
-2. Seed the database (optional):
-
-```bash
-npx sequelize-cli db:seed:all
-```
-
-3. Start the server:
-
-```bash
-npm start
-```
-
-The server will be available at `http://localhost:3000`
-
-## 📊 Database Schema
+## 🗄️ Database Schema
 
 ### Entity Relationship Diagram
 
 ```
 City (1) ----- (∞) Airport
-Airport (1) ----- (∞) Flight
+Airport (1) ----- (∞) Flight (departure)
+Airport (1) ----- (∞) Flight (arrival)
 Flight (∞) ----- (1) Airplane
 ```
 
@@ -155,10 +96,16 @@ Flight (∞) ----- (1) Airplane
 | price              | INT       | Not Null                    |
 | boardingGate       | STRING    | Optional                    |
 | totalSeats         | INT       | Not Null                    |
+| availableSeats     | INT       | Not Null                    |
 | created_at         | TIMESTAMP | Default: CURRENT_TIMESTAMP  |
 | updated_at         | TIMESTAMP | Default: CURRENT_TIMESTAMP  |
 
-## 📚 API Documentation
+## 📡 API Endpoints
+
+### Base URL
+```
+http://localhost:4000/api/v1
+```
 
 ### City Endpoints
 
@@ -192,41 +139,139 @@ Flight (∞) ----- (1) Airplane
 
 ### Flight Endpoints
 
-| Method | Endpoint   | Description         |
-| ------ | ---------- | ------------------- |
-| POST   | `/flights` | Create a new flight |
-| GET    | `/flights` | List all flights    |
+| Method | Endpoint         | Description                |
+| ------ | ---------------- | -------------------------- |
+| POST   | `/flights`       | Create a new flight        |
+| GET    | `/flights`       | List all flights           |
+| GET    | `/flights/:id`   | Get flight details         |
+| PATCH  | `/flights/:id`   | Update flight details      |
+| DELETE | `/flights/:id`   | Delete a flight            |
 
-## 💻 Development
+## 🔄 Service Integration
 
-### Project Structure
+This service integrates with other airline management services:
+- **Booking Service:** Provides flight details and seat availability for bookings
+- **Authentication Service:** Validates user tokens for secure operations
+- **Reminder Service:** Supplies flight information for notifications
+
+## 🏗️ Project Structure
 
 ```
 src/
-├── config/         # Configuration files
-├── controllers/    # Route controllers
-├── models/         # Database models
-├── routes/         # API routes
-├── middleware/     # Custom middleware
-├── utils/          # Utility functions
-└── app.js          # Application entry point
+├── config/
+│   ├── config.json
+│   └── ServerConfig.js
+├── controllers/
+│   ├── airplane-controller.js
+│   ├── airport-controller.js
+│   ├── city-controller.js
+│   └── flight-controller.js
+├── middlewares/
+│   ├── flight-middlewares.js
+│   └── index.js
+├── models/
+│   ├── airplane.js
+│   ├── airport.js
+│   ├── city.js
+│   ├── flights.js
+│   └── index.js
+├── repository/
+│   ├── airplane-repository.js
+│   ├── airport-repository.js
+│   ├── city-repository.js
+│   ├── crud-repositories.js
+│   ├── flight-repository.js
+│   └── index.js
+├── routes/
+│   ├── index.js
+│   ├── v1/
+│   │   └── index.js
+│   └── v2/
+├── services/
+│   ├── airplane-service.js
+│   ├── airport-service.js
+│   ├── city-service.js
+│   ├── crud-service.js
+│   ├── flight-service.js
+│   └── index.js
+├── seeders/
+│   ├── add-airports.js
+│   └── add-airplanes.js
+├── utils/
+│   └── helper.js
+└── index.js
 ```
 
-### Code Style
+## 🚀 Getting Started
 
-- Follow ESLint configuration
-- Use meaningful variable names
-- Write clear comments
-- Follow REST API best practices
+1. Clone the repository
+```bash
+git clone https://github.com/nikhilkalburgi45/Flight-And-Search.git
+```
+
+2. Install dependencies
+```bash
+npm install
+```
+
+3. Set up environment variables
+```bash
+cp .env.example .env
+# Edit .env with your configuration
+```
+
+4. Run migrations
+```bash
+npx sequelize-cli db:migrate
+```
+
+5. Seed the database (optional)
+```bash
+npx sequelize-cli db:seed:all
+```
+
+6. Start the server
+```bash
+npm start
+```
+
+## 📝 API Response Format
+
+All API responses follow a standard format:
+
+```json
+{
+    "message": "Success/Error message",
+    "success": true/false,
+    "error": {},
+    "data": {}
+}
+```
+
+## 🔒 Security Features
+
+- Input validation for all API endpoints
+- Error messages don't expose internal details
+- Environment variables for sensitive data
+- Proper HTTP status codes for different scenarios
 
 ## 🤝 Contributing
 
 1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## 👥 Authors
+
+- **Nikhil Kalburgi** - [GitHub](https://github.com/nikhilkalburgi45)
+
+## 🙏 Acknowledgments
+
+- All contributors who have helped shape this project
+- The Node.js and Express.js communities for excellent documentation
