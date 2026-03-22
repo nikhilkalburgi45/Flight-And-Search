@@ -31,7 +31,7 @@ A comprehensive microservice for managing flights, airports, airplanes, and citi
 Create a `.env` file in the root directory with the following variables:
 
 ```env
-PORT=4000
+PORT=3000
 DB_NAME=airline_flights
 DB_USERNAME=root
 DB_PASSWORD=your_password
@@ -203,6 +203,26 @@ src/
 ```
 
 ## 🚀 Getting Started
+
+### Using Docker (Recommended)
+
+1. Clone the repository
+```bash
+git clone https://github.com/nikhilkalburgi45/Flight-And-Search.git
+cd FlightAndSearch
+```
+
+2. Build the Docker image
+```bash
+docker build -t flight-service .
+```
+
+3. Run the container
+```bash
+docker run -p 4000:4000 --env-file .env flight-service
+```
+
+### Local Development
 
 1. Clone the repository
 ```bash
