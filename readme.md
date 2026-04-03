@@ -31,7 +31,7 @@ A comprehensive microservice for managing flights, airports, airplanes, and citi
 Create a `.env` file in the root directory with the following variables:
 
 ```env
-PORT=3000
+PORT=4000
 DB_NAME=airline_flights
 DB_USERNAME=root
 DB_PASSWORD=your_password
