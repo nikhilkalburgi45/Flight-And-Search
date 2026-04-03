@@ -15,7 +15,7 @@ module.exports = {
         unique: true,
       },
       airplaneId: {
-        type: Sequelize.INTEGER, 
+        type: Sequelize.INTEGER,
         allowNull: false,
       },
       departureAirportId: {
@@ -38,7 +38,7 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false,
       },
-      bordingGate: {
+      boardingGate: {
         type: Sequelize.STRING,
       },
       totalSeats: {
